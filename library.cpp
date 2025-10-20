@@ -152,7 +152,15 @@ void Library::displayAllBooks() {
         cout << "Aucun livre dans la bibliothèque.\n";
         return;
     }
-    
+    sort(books.begin(),books.end(),[](const unique_ptr<Book>& a, const unique_ptr<Book>& b){
+        bool sort;
+        if(a->getTitle() == b->getTitle()){
+            sort = a->getAuthor() < b->getAuthor()  ;
+        } else {
+            sort = a->getTitle() < b->getTitle(); 
+        }
+        return sort;
+    });
     cout << "\n=== TOUS LES LIVRES ===\n";
     for (size_t i = 0; i < books.size(); ++i) {
         cout << "\nLivre " << (i + 1) << " :\n";

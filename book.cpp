@@ -6,8 +6,11 @@ Book::Book() : title(""), author(""), isbn(""){
 
 }
 Book::Book(const string& title, const string& author, const string& isbn){
+this->title = title;
+this->author = author;
+this->isbn = isbn;
+this->isAvailable = 1;
 }
-Book::~Book(){}
 string Book::getTitle() const {
     return title;
 }
@@ -47,18 +50,18 @@ void Book::returnBook(){
     this->borrowerName = "";
 }
 string Book::toString() const{
-    string result = "Titre :" + title + "\nAutheur :" + author + "\nISBN" + isbn + "\n"; 
+    string result = "Titre : " + this->title + "\nAutheur : " + this->author + "\nISBN" + this->isbn + "\n"; 
     if (isAvailable)
     {
         result += "Il est disponible";
     } else {
-        result += "Il est emprunté par " + borrowerName;
+        result += "Il est emprunté par " + this->borrowerName;
     }
     return result;
     
 }
 string Book::toFileFormat() const{
-  string result = title + "|" + author + "|" + isbn + "|"; 
+  string result = this->title + "|" + author + "|" + isbn + "|"; 
     if (isAvailable)
     {
         result += "1|";

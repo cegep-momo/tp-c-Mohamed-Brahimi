@@ -44,6 +44,28 @@ string getInput(const string& prompt) {
     return input;
 }
 
+bool confirmation(){
+    string confirmationString;
+    bool confirm;
+    bool incorrectFormat = true;
+    while (incorrectFormat){
+        cout << "Êtes-vous sûres de vouloir procéder avec la suppression ? (o/n)\n";
+        cin >> confirmationString;
+        if (tolower(confirmationString[0]) == 'o')
+        {
+            confirm = true;
+            incorrectFormat = false;
+        } else if (tolower(confirmationString[0]) == 'n')
+        {           
+            confirm = false;
+            incorrectFormat = false;
+        } else {
+            cout << "Veuillez répondre avec o ou n .\n";
+        }
+    }
+       return confirm;
+}
+
 int main() {
     Library library;
     FileManager fileManager;
@@ -86,13 +108,17 @@ int main() {
             
             case 2: { // Remove Book
                 string isbn = getInput("Entrez l'ISBN du livre à supprimer : ");
-                
+                if (confirmation()){
                 if (library.removeBook(isbn)) {
                     cout << "Livre supprimé avec succès !\n";
                 } else {
                     cout << "Livre non trouvé.\n";
                 }
+                } else {
+                    cout << "Livre non supprimé.\n";
+                }                    
                 pauseForInput();
+
                 break;
             }
             
