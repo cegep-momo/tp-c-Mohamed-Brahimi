@@ -69,11 +69,11 @@ bool confirmation(){
 int main() {
     Library library;
     FileManager fileManager;
-    
     // Load existing data
     cout << "Chargement des données de la bibliothèque...\n";
     fileManager.loadLibraryData(library);
-    
+    fileManager.loadArchiveFromFile(library);
+
     int choice;
     bool running = true;
     

@@ -6,13 +6,14 @@
 
 #include "book.h"
 #include "user.h"
-
+#include "archive.h"
 using namespace std;
 
 class Library {
 private:
     vector<unique_ptr<Book>> books;
     vector<unique_ptr<User>> users;
+    vector<unique_ptr<Archive>> actionArchive;
 
 public:
     // Constructor and destructor
@@ -27,7 +28,9 @@ public:
     vector<Book*> searchBooksByAuthor(const string& author);
     vector<Book*> getAvailableBooks();
     vector<Book*> getAllBooks();
-    
+    // Archive management
+    void addArchiveAction(const string& action, const string& user);
+    vector<Archive*> getAllArchiveActions();
     // User management
     void addUser(const User& user);
     User* findUserById(const string& userId);
@@ -41,7 +44,7 @@ public:
     void displayAllBooks();
     void displayAvailableBooks();
     void displayAllUsers();
-    
+    void displayAllActions();
     // Statistics
     int getTotalBooks() const;
     int getAvailableBookCount() const;

@@ -6,12 +6,12 @@
 using namespace std;
 
 // Constructor
-FileManager::FileManager(const string& booksFile, const string& usersFile)
-    : booksFileName(booksFile), usersFileName(usersFile) {}
+FileManager::FileManager(const string& booksFile, const string& usersFile, const string& archiveFile)
+    : booksFileName(booksFile), usersFileName(usersFile), archiveFileName(archiveFile) {}
 
 // Save all library data
 bool FileManager::saveLibraryData(Library& library) {
-    return saveBooksToFile(library) && saveUsersToFile(library);
+    return saveBooksToFile(library) && saveUsersToFile(library) && saveArchiveToFile(library);
 }
 
 // Load all library data
@@ -54,6 +54,43 @@ bool FileManager::saveUsersToFile(Library& library) {
     file.close();
     return true;
 }
+bool FileManager::saveArchiveToFile(Library& library) {
+    ofstream file(archiveFileName);
+    if (!file.is_open()) {
+        cout << "Erreur : Impossible d'ouvrir " << archiveFileName << " en écriture.\n";
+        return false;
+    }
+
+    auto archives = library.getAllArchiveActions();
+    for (Archive* archive : archives) {
+        file << archive->toFileFormat() << "\n";
+    }
+    
+    file.close();
+    return true;
+}
+bool FileManager::loadArchiveFromFile(Library& library) {
+    ifstream file(archiveFileName);
+    if (!file.is_open()) {
+        cout << "Aucun fichier d'archive existant trouvé. Démarrage sans actions enregistrées.\n";
+        return false;
+    }
+
+    string line;
+    int count = 0;
+    while (getline(file, line)) {
+        if (!line.empty()) {
+            Archive archive;
+            archive.fromFileFormat(line);
+            library.addArchiveAction(archive.getAction(), archive.getUser());
+            count++;
+        }
+    }
+
+    file.close();
+    cout << "Chargé " << count << " action(s) depuis le fichier.\n";
+    return true;
+}
 
 // Load books from file
 bool FileManager::loadBooksFromFile(Library& library) {
@@ -78,6 +115,8 @@ bool FileManager::loadBooksFromFile(Library& library) {
     cout << "Chargé " << count << " livre(s) depuis le fichier.\n";
     return true;
 }
+
+
 
 // Load users from file
 bool FileManager::loadUsersFromFile(Library& library) {
@@ -117,6 +156,10 @@ void FileManager::createBackup() {
     
     if (fileExists(usersFileName)) {
         filesystem::copy_file(usersFileName, usersFileName + ".backup");
+    }
+
+    if (fileExists(archiveFileName)) {
+        filesystem::copy_file(archiveFileName, archiveFileName + ".backup");
     }
     
     cout << "Fichiers de sauvegarde créés.\n";

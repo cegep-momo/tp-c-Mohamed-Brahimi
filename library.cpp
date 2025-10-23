@@ -119,7 +119,7 @@ vector<User*> Library::getAllUsers() {
 bool Library::checkOutBook(const string& isbn, const string& userId) {
     Book* book = findBookByISBN(isbn);
     User* user = findUserById(userId);
-    
+    this->addArchiveAction("Emprunt du livre ISBN: " + isbn + " avec le Titre : " + book->getTitle(), "Par : " + user->getName() + " ID: " + userId);
     if (book && user && book->getAvailability()) {
         book->checkOut(user->getName());
         user->borrowBook(isbn);
@@ -131,11 +131,13 @@ bool Library::checkOutBook(const string& isbn, const string& userId) {
 // Return book
 bool Library::returnBook(const string& isbn) {
     Book* book = findBookByISBN(isbn);
-    
+    User* user = nullptr;
+
     if (book && !book->getAvailability()) {
         // Find the user who borrowed this book
         for (auto& user : users) {
             if (user->hasBorrowedBook(isbn)) {
+                this->addArchiveAction("Retour du livre ISBN: " + isbn + " avec le Titre : " + book->getTitle(), "Par : " + user->getName() + " ID: " + user->getUserId());
                 user->returnBook(isbn);
                 break;
             }
@@ -209,4 +211,18 @@ int Library::getAvailableBookCount() const {
             return book->getAvailability();
         });
 }
+// Archive management
+void Library::addArchiveAction(const string& action, const string& user) {
+    actionArchive.push_back(make_unique<Archive>(action, user));
+}
+
+vector<Archive*> Library::getAllArchiveActions() {
+    vector<Archive*> allArchives;
+    for (auto& archive : actionArchive) {
+        allArchives.push_back(archive.get());
+    }
+    return allArchives;
+}
+
+
 int Library::getCheckedOutBookCount() const { return getTotalBooks() - getAvailableBookCount(); }
