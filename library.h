@@ -41,8 +41,8 @@ public:
     bool returnBook(const string& isbn);
     
     // Display methods
-    void displayAllBooks();
-    void displayAvailableBooks();
+    void displayAllBooks(bool sortByAuthor);
+    void displayAvailableBooks(bool sortByAuthor);
     void displayAllUsers();
     void displayAllActions();
     // Statistics

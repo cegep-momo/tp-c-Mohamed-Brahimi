@@ -65,7 +65,27 @@ bool confirmation(){
     }
        return confirm;
 }
-
+bool sortByAuthor(){
+     string confirmationString;
+    bool authorSort;
+    bool incorrectFormat = true;
+    while (incorrectFormat){
+        cout << "Voulez vous triez par titre ou auteur ? (a/t)\n";
+        cin >> confirmationString;
+        if (tolower(confirmationString[0]) == 'a')
+        {
+            authorSort = true;
+            incorrectFormat = false;
+        } else if (tolower(confirmationString[0]) == 't')
+        {           
+            authorSort = false;
+            incorrectFormat = false;
+        } else {
+            cout << "Veuillez répondre avec a ou t .\n";
+        }
+    }
+       return authorSort;
+}
 int main() {
     Library library;
     FileManager fileManager;
@@ -159,12 +179,12 @@ int main() {
             }
             
             case 5: // Display All Books
-                library.displayAllBooks();
+                library.displayAllBooks(sortByAuthor());
                 pauseForInput();
                 break;
             
             case 6: // Display Available Books
-                library.displayAvailableBooks();
+                library.displayAvailableBooks(sortByAuthor());
                 pauseForInput();
                 break;
             
