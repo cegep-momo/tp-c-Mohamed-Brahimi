@@ -19,8 +19,8 @@ Pour ca il suffit de les copiers dans le repertoire `build` avec l'application `
 
 # Question 1 :
 
-La fonctionalité que je vais expliquer est celle lié à la lecture et à l'écriture dans les fichiers.
-D'abord la fonction appellé lors de la lecture ou de l'écriture appartient à la la librairie fstream. Afin d'écrire dans un fichier nous utilisant cette fonction selon le fichier.
+La fonctionnalité que je vais expliquer est celle liée à la lecture et à l'écriture dans les fichiers.
+D'abord, la fonction appelée lors de la lecture ou de l'écriture appartient à la librairie fstream. Afin d'écrire dans un fichier, nous utilisons cette fonction selon le fichier.
 
 ```c++
 bool FileManager::saveBooksToFile(Library& library) {
@@ -41,8 +41,8 @@ bool FileManager::saveBooksToFile(Library& library) {
 
 ```
 
-Dans ce code nous commençant par ouvrir le fichier en utilisant ofstream. Ofstream est un file stream qui se spécifie dans la l'écriture dans un fichier. Après avoir ouvrit le fichier, nous vérifions que celui-ci à actuellement été ouvert. Si ce n'est pas le cas, la fonction retourne une erreur. Dans le cas contraire, nous obtenons tout les livres en utilisant une fonction qui retourne chaque livres de la librairie. Ensuite nous insérant les livres sous forme d'un string facilement lisible dans le fichier ouvert à la première étape en utilisant une méthode similaire à l'utilisation de cout. Après la lecture, le fichier est fermer avec la fonction file.close() afin de libérer les ressources.
-Pour La lecture, nous utilisant la fonction suivante.
+Dans ce code, nous commençons par ouvrir le fichier en utilisant ofstream. Ofstream est un file stream qui se spécialise dans l'écriture dans un fichier. Après avoir ouvert le fichier, nous vérifions que celui-ci a effectivement été ouvert. Si ce n'est pas le cas, la fonction retourne une erreur. Dans le cas contraire, nous obtenons tous les livres en utilisant une fonction qui retourne chaque livre de la librairie. Ensuite, nous insérons les livres sous forme d'un string facilement lisible dans le fichier ouvert à la première étape en utilisant une méthode similaire à l'utilisation de cout. Après l'écriture, le fichier est fermé avec la fonction file.close() afin de libérer les ressources.
+Pour la lecture, nous utilisons la fonction suivante.
 
 ```c++
 bool FileManager::loadBooksFromFile(Library& library) {
@@ -70,6 +70,6 @@ bool FileManager::loadBooksFromFile(Library& library) {
 
 ```
 
-Cette fonction utilise ifstream qui est le file stream se concentrant sur l'écriture dans un fichier. Après avoir fait la même vérification que plus tôt, nous créans le string qui contiendra les lignes lues et une variables qui contiendra le nombre de ligne lue. Ensuite, nous utilisant la fonction getLine de la librairie fstream afin de lire le fichier ligne par ligne et nous stockant ces lignes dans le string créé précedemment. Il serait possible de simplement faire file >> line mais il lirait les mot, mot par mots, un à la fois. Ensuite, nous stockants les livres dans la librairie.
+Cette fonction utilise ifstream qui est le file stream se concentrant sur la lecture dans un fichier. Après avoir fait la même vérification que plus tôt, nous créons le string qui contiendra les lignes lues et une variable qui contiendra le nombre de lignes lues. Ensuite, nous utilisons la fonction getLine de la librairie fstream afin de lire le fichier ligne par ligne et nous stockons ces lignes dans le string créé précédemment. Il serait possible de simplement faire file >> line mais il lirait les mots, mot par mot, un à la fois. Ensuite, nous stockons les livres dans la librairie.
 
 # Question 2
